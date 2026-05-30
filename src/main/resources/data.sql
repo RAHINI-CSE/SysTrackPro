@@ -1,0 +1,1 @@
+-- Local schema initialization placeholder

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SysTrack Pro | Dashboard</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <h1>SysTrack Pro Control Panel</h1>
+        <p>Real-Time Network Performance Monitoring</p>
+    </header>
+
+    <main class="container">
+        <div class="card action-panel">
+            <h3>System Utilities</h3>
+            <a th:href="@{/api/devices/ingest}" class="btn">Ingest Telemetry File</a>
+        </div>
+
+        <div class="card table-panel">
+            <h3>Monitored Infrastructure Inventory</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Device ID</th>
+                        <th>IP Address</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="device : ${devices}">
+                        <td th:text="${device.id}">DEV-001</td>
+                        <td th:text="${device.ipAddress}">192.168.1.1</td>
+                        <td th:text="${device.class.simpleName}">Server</td>
+                        <td>
+                            <span th:text="${device.monitoringStatus}" 
+                                  th:classappend="${device.monitoringStatus == 'HEALTHY'} ? 'badge-green' : 'badge-red'">
+                                HEALTHY
+                            </span>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(devices)}">
+                        <td colspan="4" style="text-align: center; color: #888;">No devices registered in the system database.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

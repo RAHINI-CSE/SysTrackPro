@@ -1,0 +1,49 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+header {
+    background: #1e293b;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+}
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+th {
+    background-color: #f8fafc;
+}
+.btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.badge-green { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.85em; }
+.badge-red { background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 4px; font-size: 0.85em; }
