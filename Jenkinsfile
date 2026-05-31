@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    
-    tools {
-        // Tells Jenkins to inject the managed JDK 23 tool path into this runtime
-        jdk 'jdk23'
-    }
 
     stages {
         stage('Checkout Source') {
@@ -12,17 +7,14 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build Maven Project') {
-            steps {
-                sh 'chmod +x mvnw'
-                sh './mvnw clean package -DskipTests'
-            }
-        }
+
         stage('Build Docker Image') {
             steps {
+                // This single command now securely handles both Maven packaging and Image creation!
                 sh 'docker build -t systrackpro:latest .'
             }
         }
+
         stage('Deploy Container') {
             steps {
                 sh 'docker rm -f systrackpro-container || true'
@@ -30,9 +22,10 @@ pipeline {
             }
         }
     }
+
     post {
         success {
-            echo 'Pipeline Executed Successfully!'
+            echo 'Pipeline Executed Successfully! SysTrackPro is up.'
         }
         failure {
             echo 'Pipeline Failed.'
