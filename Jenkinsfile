@@ -1,10 +1,14 @@
 pipeline {
     agent any
+    
+    tools {
+        // Must match the exact name you just saved in the Global Tool configuration screen
+        dockerTool 'docker-default'
+    }
 
     stages {
         stage('Checkout Source') {
             steps {
-                // Securely pulls your multi-module project files from GitHub
                 checkout scm
             }
         }
@@ -12,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Uses the Native Jenkins API to execute your multi-stage Dockerfile build process
+                    // Triggers your multi-stage Dockerfile using Jenkins' native plugin API
                     docker.build('systrackpro:latest', '.')
                 }
             }
@@ -20,11 +24,11 @@ pipeline {
 
         stage('Deploy Container') {
             steps {
-                // Force removes any running naming-conflict objects safely before launching
+                // Safely tears down any old containers running under this name first
                 sh 'docker rm -f systrackpro-container || true'
                 
                 script {
-                    // Natively provisions and runs the newly compiled image on host port 8080
+                    // Launches your Java 23 workspace container live on port 8080
                     docker.image('systrackpro:latest').run('-d -p 8080:8080 --name systrackpro-container')
                 }
             }
